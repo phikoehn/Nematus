@@ -26,7 +26,7 @@ from collections import OrderedDict
 
 profile = False
 
-from data_iterator import TextIterator
+from data_iterator import TextIterator,TextIterator_with_alignment
 from util import *
 from theano_util import *
 from alignment_util import *
@@ -235,6 +235,11 @@ def build_model(tparams, options):
     y_mask = tensor.matrix('y_mask', dtype='float32')
     y_mask.tag.test_value = numpy.ones(shape=(8, 10)).astype('float32')
 
+    ## Add by Pengyu
+    Real_Alignment=tensor.matrix('Real_Alignment',dtype='float32')
+
+
+
     x, ctx = build_encoder(tparams, options, trng, use_noise, x_mask, sampling=False)
     n_samples = x.shape[2]
     n_timesteps_trg = y.shape[0]
@@ -331,15 +336,18 @@ def build_model(tparams, options):
     # cost
     y_flat = y.flatten()
     y_flat_idx = tensor.arange(y_flat.shape[0]) * options['n_words'] + y_flat
+
     cost = -tensor.log(probs.flatten()[y_flat_idx])
     cost = cost.reshape([y.shape[0], y.shape[1]])
     cost = (cost * y_mask).sum(0)
 
-    # cost for alignment
+
+    ### Add by Pengyu
+    cost_no_att=cost
+    cost+= 0.0001*tensor.sum((opt_ret['dec_alphas']-Real_Alignment)**2 )
+    return trng, use_noise, x, x_mask, y, y_mask,Real_Alignment, opt_ret, cost,cost_no_att
     
-    #print "Print out in build_model()"
-    #print opt_ret
-    return trng, use_noise, x, x_mask, y, y_mask, opt_ret, cost
+    #return trng, use_noise, x, x_mask, y, y_mask, opt_ret, cost
 
 
 # build a sampler
@@ -716,7 +724,6 @@ def train(dim_word=100,  # word vector dimensionality
     ###################### Model options
     model_options = locals().copy()
 
-
     if model_options['dim_per_factor'] == None: # if no-specific assignment for specific embedding, make it uniform length of ['dim_word']
         if factors == 1:
             model_options['dim_per_factor'] = [model_options['dim_word']]
@@ -762,7 +769,7 @@ def train(dim_word=100,  # word vector dimensionality
                          interpolation_rate=domain_interpolation_cur,
                          maxibatch_size=maxibatch_size)
     else:
-        train = TextIterator(datasets[0], datasets[1],
+        train = TextIterator_with_alignment(datasets[0], datasets[1],datasets[2],# [2] is the aligment
                          dictionaries[:-1], dictionaries[-1],
                          n_words_source=n_words_src, n_words_target=n_words,
                          batch_size=batch_size,
@@ -771,7 +778,9 @@ def train(dim_word=100,  # word vector dimensionality
                          shuffle_each_epoch=shuffle_each_epoch,
                          sort_by_length=sort_by_length,
                          maxibatch_size=maxibatch_size)
-
+   
+    #print('TextIterator_worked')
+    #sys.exit(0)
     if valid_datasets and validFreq:
         valid = TextIterator(valid_datasets[0], valid_datasets[1],
                             dictionaries[:-1], dictionaries[-1],
@@ -794,13 +803,28 @@ def train(dim_word=100,  # word vector dimensionality
     ########### Theano parameters
     tparams = init_theano_params(params)
 
+    
+    '''
+    print 'model options'
+    print model_options
+    print 'tparams'
+    print tparams
+    sys.exit(0)
+    '''
+
+
+
     trng, use_noise, \
-        x, x_mask, y, y_mask, \
+        x, x_mask, y, y_mask, Real_Alignment,\
         opt_ret, \
-        cost = \
+        cost,cost_no_att = \
         build_model(tparams, model_options)
 
-    inps = [x, x_mask, y, y_mask]
+    # cost: with att:training cost
+    # cost_no_att: val cost (or test cost)
+    
+    inps = [x, x_mask, y, y_mask,Real_Alignment]
+    inps_no_att = [x, x_mask, y, y_mask]
 
     if validFreq or sampleFreq:
         print 'Building sampler'
@@ -808,10 +832,14 @@ def train(dim_word=100,  # word vector dimensionality
 
     # before any regularizer
     print 'Building f_log_probs...',
-    f_log_probs = theano.function(inps, cost, profile=profile)
+    f_log_probs = theano.function(inps, cost, profile=profile)  
+    f_log_probs_no_att = theano.function(inps_no_att, cost_no_att, profile=profile)
+    #theano.printing.pydotprint(f_log_probs, outfile="f_log_probs.png", var_with_name_simple=True)
+    #sys.exit(0)
     print 'Done'
 
     cost = cost.mean()
+
 
     # apply L2 regularization on weights
     if decay_c > 0.:
@@ -853,6 +881,7 @@ def train(dim_word=100,  # word vector dimensionality
         updated_params = tparams
 
     print 'Computing gradient...',
+    ### Pengyu: We need to train on the cost, and validate on the cost_no_att
     grads = tensor.grad(cost, wrt=itemlist(updated_params))
     print 'Done'
 
@@ -909,7 +938,7 @@ def train(dim_word=100,  # word vector dimensionality
     for eidx in xrange(max_epochs):
         n_samples = 0
 
-        for x, y in train:
+        for x, y,T_alignment in train:
             n_samples += len(x)
             last_disp_samples += len(x)
             uidx += 1
@@ -930,7 +959,7 @@ def train(dim_word=100,  # word vector dimensionality
                 continue
 
             # compute cost, grads and copy grads to shared variables
-            cost = f_grad_shared(x, x_mask, y, y_mask)
+            cost = f_grad_shared(x, x_mask, y, y_mask,T_alignment)
 
             # do the update on parameters
             f_update(lrate)
@@ -1030,7 +1059,7 @@ def train(dim_word=100,  # word vector dimensionality
             # validate model on validation set and early stop if necessary
             if valid and validFreq and numpy.mod(uidx, validFreq) == 0:
                 use_noise.set_value(0.)
-                valid_errs, alignment = pred_probs(f_log_probs, prepare_data,
+                valid_errs, alignment = pred_probs(f_log_probs_no_att, prepare_data,
                                         model_options, valid)
                 valid_err = valid_errs.mean()
                 history_errs.append(valid_err)
@@ -1091,7 +1120,7 @@ def train(dim_word=100,  # word vector dimensionality
 
     if valid:
         use_noise.set_value(0.)
-        valid_errs, alignment = pred_probs(f_log_probs, prepare_data,
+        valid_errs, alignment = pred_probs(f_log_probs_no_att, prepare_data,
                                         model_options, valid)
         valid_err = valid_errs.mean()
 
