@@ -2,6 +2,7 @@ import numpy
 import gzip
 import shuffle
 from util import load_dict
+import sys
 
 def fopen(filename, mode='r'):
     if filename.endswith('.gz'):
@@ -18,16 +19,17 @@ class TextIterator_with_alignment:
                  n_words_target=-1,
                  skip_empty=False,
                  shuffle_each_epoch=False,
-                 sort_by_length=True,
+                 sort_by_length=False, #### modified by pengyu
                  maxibatch_size=20):
+      
         if shuffle_each_epoch:
             self.source_orig = source
             self.target_orig = target
             self.source, self.target = shuffle.main([self.source_orig, self.target_orig], temporary=True)
         else:
-            self.source = fopen(source, 'r')
-            self.target = fopen(target, 'r')
-            #### Add by pengyu: we assume now we don't have shuffle
+            self.source = open(source, 'r')
+            self.target = open(target, 'r')
+            #### Add by pengyu: we assume now we don't have shuffle or sorting...
             self.alignment=numpy.load(alignment_file)
             self.align_iter=iter(self.alignment)
             
@@ -35,6 +37,18 @@ class TextIterator_with_alignment:
         for source_dict in source_dicts:
             self.source_dicts.append(load_dict(source_dict))
         self.target_dict = load_dict(target_dict)
+
+
+        self.Reverse_target_dict={}
+        self.Reverse_source_dict={}
+
+        for Kword in self.target_dict:
+            self.Reverse_target_dict[ self.target_dict[Kword] ]=Kword
+
+
+        for Kword in self.source_dicts[0]:
+            self.Reverse_source_dict[ self.source_dicts[0][Kword] ]=Kword
+
 
         self.batch_size = batch_size
         self.maxlen = maxlen
@@ -54,8 +68,16 @@ class TextIterator_with_alignment:
                     if idx >= self.n_words_target:
                         del self.target_dict[key]
 
-        self.shuffle = shuffle_each_epoch
-        self.sort_by_length = sort_by_length
+
+
+        ###########
+        #self.shuffle = shuffle_each_epoch
+        #self.sort_by_length = sort_by_length
+        self.shuffle = False
+        self.sort_by_length = False
+
+        ##########
+
 
         self.source_buffer = []
         self.target_buffer = []
@@ -126,6 +148,15 @@ class TextIterator_with_alignment:
             self.reset()
             raise StopIteration
 
+        def PRINT(A):
+            for item in A:
+                print item
+        print 'source='
+        PRINT (self.source_buffer)
+        print 'target='
+        PRINT (self.target_buffer)
+        print 'align='
+        PRINT (self.alignment_buffer)
         try:
 
             # actual work here
@@ -155,12 +186,21 @@ class TextIterator_with_alignment:
                     continue
 
                 ## read the alignment and generate a matrix
-                aa = self.alignment_buffer_pop()
-                Temp_aligment=numpy.zeros( ( len(tt),len(ss)),dtype='float')
+                aa = self.alignment_buffer.pop()
+                Temp_alignment=numpy.zeros( ( len(tt),len(ss)),dtype='float32')
+
+
+                print aa
+                print [self.Reverse_target_dict[t_] for t_ in tt]
+                print [self.Reverse_source_dict[s_[0]] for s_ in ss]
 
                 ## Construction of the supervised alignment matrix
                 for item in aa:
-                    Temp_alignment[item[1]][item[0]]=1.0
+                    try:
+                        Temp_alignment[item[1]][item[0]]=1.0
+
+                    except IndexError:
+                        sys.exit(0)
 
                 ## normalize it with sum=1
                 for i in range(0,len(tt)):
@@ -193,7 +233,7 @@ class TextIterator:
                  n_words_target=-1,
                  skip_empty=False,
                  shuffle_each_epoch=False,
-                 sort_by_length=True,
+                 sort_by_length=False,
                  maxibatch_size=20):
         if shuffle_each_epoch:
             self.source_orig = source

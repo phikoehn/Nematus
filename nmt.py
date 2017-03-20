@@ -107,7 +107,7 @@ def init_params(options):
                                 nin=ctxdim, nout=options['dim'])
     # decoder
     params = get_layer_param(options['decoder'])(options, params,
-                                              prefix='decoder',
+                                             prefix='decoder',
                                               nin=options['dim_word'],
                                               dim=options['dim'],
                                               dimctx=ctxdim)
