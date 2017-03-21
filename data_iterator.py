@@ -148,6 +148,7 @@ class TextIterator_with_alignment:
             self.reset()
             raise StopIteration
 
+        '''
         def PRINT(A):
             for item in A:
                 print item
@@ -157,6 +158,7 @@ class TextIterator_with_alignment:
         PRINT (self.target_buffer)
         print 'align='
         PRINT (self.alignment_buffer)
+        '''
         try:
 
             # actual work here
@@ -180,31 +182,35 @@ class TextIterator_with_alignment:
                 if self.n_words_target > 0:
                     tt = [w if w < self.n_words_target else 1 for w in tt]
 
-                if len(ss) > self.maxlen and len(tt) > self.maxlen:
-                    continue
-                if self.skip_empty and (not ss or not tt):
-                    continue
 
                 ## read the alignment and generate a matrix
                 aa = self.alignment_buffer.pop()
                 Temp_alignment=numpy.zeros( ( len(tt),len(ss)),dtype='float32')
 
-
+                '''
                 print aa
                 print [self.Reverse_target_dict[t_] for t_ in tt]
                 print [self.Reverse_source_dict[s_[0]] for s_ in ss]
-
+                '''
                 ## Construction of the supervised alignment matrix
                 for item in aa:
                     try:
                         Temp_alignment[item[1]][item[0]]=1.0
 
                     except IndexError:
+                        print('alignment matrix Index error!')
                         sys.exit(0)
 
                 ## normalize it with sum=1
                 for i in range(0,len(tt)):
-                    Temp_alignment[i] /= sum(Temp_alignment[i])
+                    Row_Sum=sum(Temp_alignment[i])
+                    if Row_Sum >0:
+                        Temp_alignment[i] /= Row_Sum
+
+                if len(ss) > self.maxlen and len(tt) > self.maxlen:
+                    continue
+                if self.skip_empty and (not ss or not tt):
+                    continue
 
                 source.append(ss)
                 target.append(tt)

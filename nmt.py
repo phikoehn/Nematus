@@ -236,7 +236,7 @@ def build_model(tparams, options):
     y_mask.tag.test_value = numpy.ones(shape=(8, 10)).astype('float32')
 
     ## Add by Pengyu
-    Real_Alignment=tensor.matrix('Real_Alignment',dtype='float32')
+    Real_Alignment=tensor.dmatrix('Real_Alignment')
 
 
 
@@ -382,7 +382,7 @@ def build_sampler(tparams, options, use_noise, trng, return_alignment=False):
 
     print >>sys.stderr, 'Building f_init...',
     outs = [init_state, ctx]
-    f_init = theano.function([x], outs, name='f_init', profile=profile)
+    f_init = theano.function([x], outs, name='f_init', profile=profile,allow_input_downcast=True)
     print >>sys.stderr, 'Done'
 
     # x: 1 x 1
@@ -452,7 +452,7 @@ def build_sampler(tparams, options, use_noise, trng, return_alignment=False):
     if return_alignment:
         outs.append(dec_alphas)
 
-    f_next = theano.function(inps, outs, name='f_next', profile=profile)
+    f_next = theano.function(inps, outs, name='f_next', profile=profile,allow_input_downcast=True)
     print >>sys.stderr, 'Done'
 
     return f_init, f_next
@@ -751,7 +751,9 @@ def train(dim_word=100,  # word vector dimensionality
         n_words = len(worddicts[1])
         model_options['n_words'] = n_words
 
-    #################### loading data
+    #################### loading data and construct the text iterator(which now we have two version
+    #################### TextIterator_with_alignment(for training) and TextIterator(for validating)
+
     print 'Loading data'
     domain_interpolation_cur = None
     if use_domain_interpolation:
@@ -779,8 +781,6 @@ def train(dim_word=100,  # word vector dimensionality
                          sort_by_length=sort_by_length,
                          maxibatch_size=maxibatch_size)
    
-    #print('TextIterator_worked')
-    #sys.exit(0)
     if valid_datasets and validFreq:
         valid = TextIterator(valid_datasets[0], valid_datasets[1],
                             dictionaries[:-1], dictionaries[-1],
@@ -803,16 +803,6 @@ def train(dim_word=100,  # word vector dimensionality
     ########### Theano parameters
     tparams = init_theano_params(params)
 
-    
-    '''
-    print 'model options'
-    print model_options
-    print 'tparams'
-    print tparams
-    sys.exit(0)
-    '''
-
-
 
     trng, use_noise, \
         x, x_mask, y, y_mask, Real_Alignment,\
@@ -832,10 +822,11 @@ def train(dim_word=100,  # word vector dimensionality
 
     # before any regularizer
     print 'Building f_log_probs...',
-    f_log_probs = theano.function(inps, cost, profile=profile)  
-    f_log_probs_no_att = theano.function(inps_no_att, cost_no_att, profile=profile)
+    f_log_probs = theano.function(inps, cost, profile=profile,allow_input_downcast=True)  
+    f_log_probs_no_att = theano.function(inps_no_att, cost_no_att, profile=profile,allow_input_downcast=True)
     #theano.printing.pydotprint(f_log_probs, outfile="f_log_probs.png", var_with_name_simple=True)
     #sys.exit(0)
+
     print 'Done'
 
     cost = cost.mean()
@@ -938,7 +929,11 @@ def train(dim_word=100,  # word vector dimensionality
     for eidx in xrange(max_epochs):
         n_samples = 0
 
-        for x, y,T_alignment in train:
+        for x, y, T_alignment in train:
+            
+            for Ali in T_alignment:
+                print Ali
+                print Ali.shape
             n_samples += len(x)
             last_disp_samples += len(x)
             uidx += 1
