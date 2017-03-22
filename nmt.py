@@ -929,9 +929,9 @@ def train(dim_word=100,  # word vector dimensionality
     for eidx in xrange(max_epochs):
         n_samples = 0
 
-        for x, y, T_alignment in train:
+        for x, y, T_alignment in train: #x, y, z are batch, 
             
-            for Ali in T_alignment:
+            for Ali in T_alignment: 
                 print Ali
                 print Ali.shape
             n_samples += len(x)
@@ -954,6 +954,9 @@ def train(dim_word=100,  # word vector dimensionality
                 continue
 
             # compute cost, grads and copy grads to shared variables
+            # Defination:
+            # f_grad_shared = theano.function(inp, cost, updates=zgup+rg2up,
+            # it did nothing to the input, cost, it just manipulated the grad
             cost = f_grad_shared(x, x_mask, y, y_mask,T_alignment)
 
             # do the update on parameters
@@ -961,7 +964,7 @@ def train(dim_word=100,  # word vector dimensionality
 
             # check for bad numbers, usually we remove non-finite elements
             # and continue training - but not done here
-            if numpy.isnan(cost) or numpy.isinf(cost):
+            if numpy.isnan(cost) or numpy.isinf(cost)
                 print 'NaN detected'
                 return 1., 1., 1.
 
