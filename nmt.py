@@ -236,7 +236,7 @@ def build_model(tparams, options):
     y_mask.tag.test_value = numpy.ones(shape=(8, 10)).astype('float32')
 
     ## Add by Pengyu
-    Real_Alignment=tensor.dmatrix('Real_Alignment')
+    Real_Alignment=tensor.dtensor3('Real_Alignment')
 
 
 
@@ -667,6 +667,9 @@ def pred_probs(f_log_probs, prepare_data, options, iterator, verbose=True, norma
 
     return numpy.array(probs), alignments_json
 
+def PrintRow(X):
+    for item in X:
+        print item
 
 def train(dim_word=100,  # word vector dimensionality
           dim=1000,  # the number of LSTM units
@@ -824,6 +827,7 @@ def train(dim_word=100,  # word vector dimensionality
     print 'Building f_log_probs...',
     f_log_probs = theano.function(inps, cost, profile=profile,allow_input_downcast=True)  
     f_log_probs_no_att = theano.function(inps_no_att, cost_no_att, profile=profile,allow_input_downcast=True)
+    ## add by pengyu
     #theano.printing.pydotprint(f_log_probs, outfile="f_log_probs.png", var_with_name_simple=True)
     #sys.exit(0)
 
@@ -931,9 +935,6 @@ def train(dim_word=100,  # word vector dimensionality
 
         for x, y, T_alignment in train: #x, y, z are batch, 
             
-            for Ali in T_alignment: 
-                print Ali
-                print Ali.shape
             n_samples += len(x)
             last_disp_samples += len(x)
             uidx += 1
@@ -948,6 +949,24 @@ def train(dim_word=100,  # word vector dimensionality
                                                 n_words_src=n_words_src,
                                                 n_words=n_words)
 
+            ### We must make the alignment to the same size
+            for i,T_a in enumerate(T_alignment):
+                T_alignment[i]=np.pad(T_a, ((0,max_len-T_a.shape[0]),(0,max_len-T_a.shape[1])), mode='constant', constant_values=0)
+
+            T_alignment=np.asarray(T_alignment)
+
+            '''
+            for a,b,c,d,e in zip(x,x_mask,y,y_mask,T_alignment):
+                print a
+                print b
+                print c
+                print d
+                print e
+            '''
+            print 'new T_alignment'
+            for T_a in T_alignment:
+                print T_a
+            
             if x is None:
                 print 'Minibatch with zero sample under length ', maxlen
                 uidx -= 1
@@ -956,7 +975,7 @@ def train(dim_word=100,  # word vector dimensionality
             # compute cost, grads and copy grads to shared variables
             # Defination:
             # f_grad_shared = theano.function(inp, cost, updates=zgup+rg2up,
-            # it did nothing to the input, cost, it just manipulated the grad
+            # did not change cost, just manipulated update
             cost = f_grad_shared(x, x_mask, y, y_mask,T_alignment)
 
             # do the update on parameters
@@ -964,7 +983,7 @@ def train(dim_word=100,  # word vector dimensionality
 
             # check for bad numbers, usually we remove non-finite elements
             # and continue training - but not done here
-            if numpy.isnan(cost) or numpy.isinf(cost)
+            if numpy.isnan(cost) or numpy.isinf(cost):
                 print 'NaN detected'
                 return 1., 1., 1.
 

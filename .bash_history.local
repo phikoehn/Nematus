@@ -332,3 +332,27 @@
 2017-03-22:09:18:41 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1874  22/03/17 2017-03-22 09:14:43 ls
 2017-03-22:09:18:55 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1857  22/03/17 2017-03-22 09:18:55 cd nematus
 2017-03-22:09:18:56 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1857  22/03/17 2017-03-22 09:18:56 ls
+2017-03-22:09:19:10 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1853  22/03/17 2017-03-22 09:19:10 git add .
+2017-03-22:09:19:41 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1854  22/03/17 2017-03-22 09:19:34 git commit -m 'stacked on the "setting an array element with a sequence" bug....
+2017-03-22:09:19:56 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1855  22/03/17 2017-03-22 09:19:44 git commit -m 'stacked on the "setting an array element with a sequence" bug
+2017-03-22:09:20:03 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1856  22/03/17 2017-03-22 09:20:03 git commit -m 'stacked on the "setting an array element with a sequence" bug....'
+2017-03-22:09:20:03 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1856  22/03/17 2017-03-22 09:20:03 git commit -m 'stacked on the "setting an array element with a sequence" bug....'
+2017-03-22:09:20:19 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1855  22/03/17 2017-03-22 09:20:11 git push origin new_text_iterator 
+2017-03-22:09:22:07 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1855  22/03/17 2017-03-22 09:22:07 ls
+2017-03-22:09:22:20 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1856  22/03/17 2017-03-22 09:22:20 cd nematus
+2017-03-22:09:23:11 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1838  22/03/17 2017-03-22 08:33:55 vi nmt.py
+2017-03-22:09:23:12 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1838  22/03/17 2017-03-22 09:23:12 ls
+2017-03-22:09:36:58 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1813  22/03/17 2017-03-22 09:36:58 Nematuswkdir 
+2017-03-22:09:36:58 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1813  22/03/17 2017-03-22 09:36:58 ls
+2017-03-22:09:59:44 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1813  22/03/17 2017-03-22 09:37:00 vi nmt.py
+2017-03-22:09:59:45 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1813  22/03/17 2017-03-22 09:59:45 ls
+2017-03-22:10:16:07 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1819  22/03/17 2017-03-22 10:16:07 Nematuswkdir 
+2017-03-22:10:16:08 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1819  22/03/17 2017-03-22 10:16:08 ls
+2017-03-22:10:21:50 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1952  22/03/17 2017-03-22 10:21:50 Nematuswkdir 
+2017-03-22:10:21:51 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1873  22/03/17 2017-03-22 10:21:51 ls
+2017-03-22:10:22:00 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1784  22/03/17 2017-03-22 10:16:09 vi nmt.py
+2017-03-22:11:21:00 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1838  22/03/17 2017-03-22 10:21:53 vi nmt.py
+2017-03-22:11:23:28 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1838  22/03/17 2017-03-22 10:21:53 vi nmt.py
+2017-03-22:11:24:07 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1838  22/03/17 2017-03-22 10:21:53 vi nmt.py
+2017-03-22:11:25:06 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1839  22/03/17 2017-03-22 11:25:06 git checkout -b Try_Uniform_Alignmatrix_maxlen
+2017-03-22:11:25:11 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1829  22/03/17 2017-03-22 11:25:11 git branch
