@@ -356,3 +356,22 @@
 2017-03-22:11:24:07 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1838  22/03/17 2017-03-22 10:21:53 vi nmt.py
 2017-03-22:11:25:06 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1839  22/03/17 2017-03-22 11:25:06 git checkout -b Try_Uniform_Alignmatrix_maxlen
 2017-03-22:11:25:11 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1829  22/03/17 2017-03-22 11:25:11 git branch
+2017-03-22:11:25:17 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1825  22/03/17 2017-03-22 11:25:17 git add .
+2017-03-22:11:25:48 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1826  22/03/17 2017-03-22 11:25:48 git commit -m 'we try to put all the alignmatrix to maxlen*maxlen'
+2017-03-22:11:26:04 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1827  22/03/17 2017-03-22 11:25:56 git push origin Try_Uniform_Alignmatrix_maxlen 
+2017-03-22:11:29:30 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1783  22/03/17 2017-03-22 11:29:30 qhpy
+2017-03-22:13:26:49 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1949  22/03/17 2017-03-22 13:26:49 Nematuswkdir 
+2017-03-22:13:26:49 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1872  22/03/17 2017-03-22 13:26:49 ls
+2017-03-22:13:31:35 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1950  22/03/17 2017-03-22 13:31:35 Nematuswkdir 
+2017-03-22:13:36:27 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1834  22/03/17 2017-03-22 13:26:51 vi nmt.py
+2017-03-22:13:36:28 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1834  22/03/17 2017-03-22 13:36:28 ls
+2017-03-22:13:39:03 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1834  22/03/17 2017-03-22 13:36:35 vi nmt.py
+2017-03-22:14:55:52 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1834  22/03/17 2017-03-22 13:36:35 vi nmt.py
+2017-03-22:15:16:42 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1809  22/03/17 2017-03-22 14:55:58 vi data_iterator.py
+2017-03-22:16:02:20 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1809  22/03/17 2017-03-22 15:17:09 vi nmt.py
+2017-03-22:16:02:20 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1809  22/03/17 2017-03-22 16:02:20 ls
+2017-03-22:16:04:36 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1809  22/03/17 2017-03-22 16:03:37 vi nmt.py
+2017-03-22:16:04:51 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1766  22/03/17 2017-03-22 16:04:51 qhpy
+2017-03-22:16:05:18 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1765  22/03/17 2017-03-22 16:05:04 vi ~/.bash_profile 
+2017-03-22:21:45:16 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1781  22/03/17 2017-03-22 21:45:16 Nematuswkdir 
+2017-03-22:21:45:16 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1781  22/03/17 2017-03-22 21:45:16 ls

@@ -6,7 +6,6 @@ Build a neural machine translation model with soft attention
 import theano
 import theano.tensor as tensor
 from theano.sandbox.rng_mrg import MRG_RandomStreams as RandomStreams
-
 import cPickle as pkl
 import json
 import ipdb
@@ -897,6 +896,7 @@ def train(dim_word=100,  # word vector dimensionality
 
     print 'Building optimizers...',
     f_grad_shared, f_update = eval(optimizer)(lr, updated_params, grads, inps, cost, profile=profile)
+    ## original  
     print 'Done'
 
     print 'Total compilation time: {0:.1f}s'.format(time.time() - comp_start)
@@ -951,22 +951,12 @@ def train(dim_word=100,  # word vector dimensionality
 
             ### We must make the alignment to the same size
             for i,T_a in enumerate(T_alignment):
-                T_alignment[i]=np.pad(T_a, ((0,max_len-T_a.shape[0]),(0,max_len-T_a.shape[1])), mode='constant', constant_values=0)
 
-            T_alignment=np.asarray(T_alignment)
+                T_a_pad=numpy.pad(T_a, ( (0,1 ),(0,1 ) ), mode='constant', constant_values=0)
+                T_alignment[i]=numpy.reshape(T_a_pad,(T_a_pad.shape[0],1,T_a_pad.shape[1]))
 
-            '''
-            for a,b,c,d,e in zip(x,x_mask,y,y_mask,T_alignment):
-                print a
-                print b
-                print c
-                print d
-                print e
-            '''
-            print 'new T_alignment'
-            for T_a in T_alignment:
-                print T_a
-            
+            T_alignment=numpy.asarray(T_alignment)
+
             if x is None:
                 print 'Minibatch with zero sample under length ', maxlen
                 uidx -= 1
@@ -976,7 +966,7 @@ def train(dim_word=100,  # word vector dimensionality
             # Defination:
             # f_grad_shared = theano.function(inp, cost, updates=zgup+rg2up,
             # did not change cost, just manipulated update
-            cost = f_grad_shared(x, x_mask, y, y_mask,T_alignment)
+            cost = f_grad_shared(x, x_mask, y, y_mask,T_alignment[0])
 
             # do the update on parameters
             f_update(lrate)
