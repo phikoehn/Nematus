@@ -375,3 +375,36 @@
 2017-03-22:16:05:18 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1765  22/03/17 2017-03-22 16:05:04 vi ~/.bash_profile 
 2017-03-22:21:45:16 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1781  22/03/17 2017-03-22 21:45:16 Nematuswkdir 
 2017-03-22:21:45:16 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1781  22/03/17 2017-03-22 21:45:16 ls
+2017-03-22:21:45:22 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1773  22/03/17 2017-03-22 21:45:22 git add .
+2017-03-22:21:45:34 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1774  22/03/17 2017-03-22 21:45:34 git commit -m 'worked!'
+2017-03-22:21:45:45 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1764  22/03/17 2017-03-22 21:45:45 git branch
+2017-03-22:21:46:57 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1765  22/03/17 2017-03-22 21:46:57 git checkout Supervised_Attention 
+2017-03-22:21:47:11 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1765  22/03/17 2017-03-22 21:47:11 git branch
+2017-03-22:21:47:20 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1766  22/03/17 2017-03-22 21:47:20 git merge Supervised_Attention 
+2017-03-22:21:47:22 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1766  22/03/17 2017-03-22 21:47:22 ls
+2017-03-22:21:47:55 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1732  22/03/17 2017-03-22 21:47:24 vi nmt.py
+2017-03-22:21:48:00 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1732  22/03/17 2017-03-22 21:48:00 git branch
+2017-03-22:21:48:21 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1731  22/03/17 2017-03-22 21:48:13 git push origin Try_Uniform_Alignmatrix_maxlen 
+2017-03-22:21:48:28 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1731  22/03/17 2017-03-22 21:48:28 git checkout Supervised_Attention 
+2017-03-22:22:37:26 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1731  22/03/17 2017-03-22 22:37:26 ls
+2017-03-23:08:05:53 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1820  23/03/17 2017-03-23 08:05:53 Nematuswkdir 
+2017-03-23:13:58:05 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1827  23/03/17 2017-03-23 13:58:05 Nematuswkdir 
+2017-03-23:13:58:05 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1827  23/03/17 2017-03-23 13:58:05 ls
+2017-03-23:14:00:59 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1795  23/03/17 2017-03-23 13:58:07 vi nmt.py
+2017-03-24:13:58:11 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1869  24/03/17 2017-03-24 13:58:11 Nematuswkdir 
+2017-03-24:13:58:11 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1869  24/03/17 2017-03-24 13:58:11 ls
+2017-03-24:13:58:46 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1870  24/03/17 2017-03-24 13:58:45 git checkout -b Batch_Training
+2017-03-24:13:59:12 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1871  24/03/17 2017-03-24 13:59:03 git push origin Batch_Training 
+2017-03-24:14:05:22 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1871  24/03/17 2017-03-24 13:59:03 git push origin Batch_Training 
+2017-03-24:14:06:20 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1871  24/03/17 2017-03-24 14:06:20 Nematuswkdir 
+2017-03-24:14:06:20 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1871  24/03/17 2017-03-24 14:06:20 ls
+2017-03-24:14:09:16 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1852  24/03/17 2017-03-24 14:06:21 vi nmt.py
+2017-03-24:14:09:26 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1852  24/03/17 2017-03-24 14:09:26 :Q
+2017-03-24:14:25:53 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1965  24/03/17 2017-03-24 14:25:53 Nematuswkdir 
+2017-03-24:14:25:53 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1905  24/03/17 2017-03-24 14:25:53 ls
+2017-03-24:14:55:58 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1852  24/03/17 2017-03-24 14:11:55 vi nmt.py
+2017-03-24:15:36:35 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1852  24/03/17 2017-03-24 14:11:55 vi nmt.py
+2017-03-24:16:32:15 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1852  24/03/17 2017-03-24 14:11:55 vi nmt.py
+2017-03-24:16:32:16 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1852  24/03/17 2017-03-24 16:32:16 ls
+2017-03-24:17:07:09 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1852  24/03/17 2017-03-24 17:05:57 vi nmt.py
+2017-03-24:17:22:52 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1843  24/03/17 2017-03-24 17:22:52 git branch

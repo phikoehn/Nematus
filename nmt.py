@@ -945,17 +945,46 @@ def train(dim_word=100,  # word vector dimensionality
                 sys.stderr.write('Error: mismatch between number of factors in settings ({0}), and number in training corpus ({1})\n'.format(factors, len(x[0][0])))
                 sys.exit(1)
 
+
+
+
+            ### We will find the proper dimension for the attention, then pad our alignment to that dimension
+
+            ### We extract alignments that don't exceed the maxlen
+            ### Of course we can do it in prepare_data, but changing a function means changing many places, so we do it manually here 
+            Real_alignment=[]
+
+            for TT_x,TT_y,TT_a in zip(x,y,T_alignment):
+                if len(TT_x)<maxlen and len(TT_y)<maxlen:
+                    Real_alignment.append(TT_a)
+
+            ### x,y after prepared data would only have the sentences < maxlen
+            ### and padded to the same length
             x, x_mask, y, y_mask = prepare_data(x, y, maxlen=maxlen,
                                                 n_words_src=n_words_src,
                                                 n_words=n_words)
 
-            ### We must make the alignment to the same size
-            for i,T_a in enumerate(T_alignment):
+            ### we extract the dimensional information for the supervised attention
+            Lmax_X=x.shape[1]
+            True_Batch=x.shape[2]
+            Lmax_Y=y.shape[0]
 
-                T_a_pad=numpy.pad(T_a, ( (0,1 ),(0,1 ) ), mode='constant', constant_values=0)
-                T_alignment[i]=numpy.reshape(T_a_pad,(T_a_pad.shape[0],1,T_a_pad.shape[1]))
+            ### Safety check
+            if True_Batch != len(Real_alignment):
+                print('True_Batch problem!')
+                sys.exit(0)
+            
+            ### Initialize the formed alignment we are going to use (This dimension is exactly what will the attention be)
+            Formed_Alignment=numpy.zeros( (Lmax_Y, True_Batch, Lmax_X ) ) 
+    
+            ### Fill it slice by slice
+            for i,T_a in enumerate(Real_alignment):
+                Pad_Source=Lmax_X - T_a.shape[1]
+                Pad_Target=Lmax_Y - T_a.shape[0]
 
-            T_alignment=numpy.asarray(T_alignment)
+                T_a_pad=numpy.pad(T_a, ( (0,Pad_Target ),(0,Pad_Source ) ), mode='constant', constant_values=0)
+                Formed_Alignment[:,i,:]=T_a_pad
+            
 
             if x is None:
                 print 'Minibatch with zero sample under length ', maxlen
@@ -966,7 +995,7 @@ def train(dim_word=100,  # word vector dimensionality
             # Defination:
             # f_grad_shared = theano.function(inp, cost, updates=zgup+rg2up,
             # did not change cost, just manipulated update
-            cost = f_grad_shared(x, x_mask, y, y_mask,T_alignment[0])
+            cost = f_grad_shared(x, x_mask, y, y_mask, Formed_Alignment)
 
             # do the update on parameters
             f_update(lrate)
