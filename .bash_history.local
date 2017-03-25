@@ -408,3 +408,13 @@
 2017-03-24:16:32:16 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1852  24/03/17 2017-03-24 16:32:16 ls
 2017-03-24:17:07:09 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1852  24/03/17 2017-03-24 17:05:57 vi nmt.py
 2017-03-24:17:22:52 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1843  24/03/17 2017-03-24 17:22:52 git branch
+2017-03-24:17:22:55 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1834  24/03/17 2017-03-24 17:22:55 git add .
+2017-03-24:17:23:07 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1835  24/03/17 2017-03-24 17:23:07 git commit -m 'batch worked!'
+2017-03-24:17:23:23 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1835  24/03/17 2017-03-24 17:23:15 git push origin Batch_Training 
+2017-03-24:18:27:48 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1835  24/03/17 2017-03-24 17:29:06 vi nmt.py
+2017-03-24:21:16:18 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1881  24/03/17 2017-03-24 21:16:18 Nematuswkdir 
+2017-03-24:21:16:18 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1881  24/03/17 2017-03-24 21:16:18 ls
+2017-03-24:21:19:13 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1869  24/03/17 2017-03-24 21:16:19 vi nmt.py
+2017-03-25:08:16:41 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1829  25/03/17 2017-03-25 08:16:41 Nematuswkdir 
+2017-03-25:08:16:41 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1829  25/03/17 2017-03-25 08:16:41 ls
+2017-03-25:08:16:47 b05 /export/b05/pengyuhe/Nematus/nematus/nematus  1824  25/03/17 2017-03-25 08:16:46 git branch

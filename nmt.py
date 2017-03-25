@@ -933,6 +933,7 @@ def train(dim_word=100,  # word vector dimensionality
     for eidx in xrange(max_epochs):
         n_samples = 0
 
+        print 'epoch=',eidx
         for x, y, T_alignment in train: #x, y, z are batch, 
             
             n_samples += len(x)
