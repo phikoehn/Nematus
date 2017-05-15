@@ -41,7 +41,7 @@ class BPE_alignment(object):
             target_token = target_line.replace('\n','').split(' ')
             source_token = source_line.replace('\n','').split(' ')
 
-            # Process BPE encoding of target tokens
+            # Process BPE encoding of source tokens
             Dic={}
             for key,value in alignment_point:
                 if key not in Dic:
@@ -52,18 +52,18 @@ class BPE_alignment(object):
             alignment_point_expanded=[]
            
             original_key=0
-            for i in range(0,len(target_token)):
+            for i in range(0,len(source_token)):
                 
                 if original_key in Dic:
                     for value in Dic[original_key]:
                         alignment_point_expanded.append((i,value))
 
-                if len( target_token[i] )>= 2 and target_token[i][-2:]=='@@':
+                if len( source_token[i] )>= 2 and source_token[i][-2:]=='@@':
                     pass
                 else:
                     original_key+=1
 
-            # Now dealing with the source side
+            # Now dealing with the target side
             Dic={}
             for value,key in alignment_point_expanded:
                 if key not in Dic:
@@ -74,13 +74,13 @@ class BPE_alignment(object):
             alignment_point_final=[]
            
             original_key=0
-            for i in range(0,len(source_token)):
+            for i in range(0,len(target_token)):
                 
                 if original_key in Dic:
                     for value in Dic[original_key]:
                         alignment_point_final.append((value,i))
 
-                if len( source_token[i] )>= 2 and source_token[i][-2:]=='@@':
+                if len( target_token[i] )>= 2 and target_token[i][-2:]=='@@':
                     pass
                 else:
                     original_key+=1
